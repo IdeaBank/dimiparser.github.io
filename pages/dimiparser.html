@@ -1,16 +1,15 @@
+
 <!DOCTYPE html>
 <html>
 
 <head>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<style type="text/css">
-    body {
-  font-family:'굴림';
-  font-size:10pt;
-}
+    <style type="text/css">
         body {
+            font-family: '굴림';
+            font-size: 10pt;
             text-align: center;
         }
 
@@ -20,30 +19,31 @@
             border: 1px solid #000;
             text-align: left;
         }
-    fieldset {
-        margin: 0 auto;
-    }
+
+        fieldset {
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
-
+    
     <br><br><br>
 
     <font color="blue" size="4">DimiApi Parser</font>
-    
+
     <br><br>
 
     Input : <br>
     <textarea rows="10" cols="80" id="Input"></textarea>
 
     <br><br><br>
-    
+
     <textarea rows="1" cols="40" id="prefix" style="resize : none" placeholder="이름 앞에 붙을 접두사"></textarea>
 
     <textarea rows="1" cols="40" id="suffix" style="resize : none" placeholder="이름 뒤에 붙을 접미사"></textarea>
 
     <br><br>
-    
+
     <fieldset style="width:500px;">
         <legend>표시할 정보를 선택하세요!</legend>
 
@@ -66,20 +66,20 @@
     </fieldset>
 
     <br><br>
-    
+
     <button type="button" onclick="preview()">미리보기</button>
-    
+
     <br><br>
-    
+
     <textarea rows="2" cols="100" id="preview" style="resize : none" readonly placeholder="Preview"></textarea>
 
     <br><br>
 
     <button type="button" onclick="convert()">변환</button>
-    
+
     <br>
     <br>
-    
+
     <p id="num">    </p>
     <p id="error" style="color:red"></p>
 
@@ -87,59 +87,64 @@
 
     </textarea>
 
-    <br><br><br><br><br><br><br><br>
+    <br><br><br><br><br>
 
-<script>
+    <fieldset>
+        <p id="Made_By" style="border"><strong>Made by Woojin Lim</strong></p>
+    </fieldset>
+        <br><br><br>
 
-     function convert() {
-         //init
-         document.getElementById("Output").value = "";
-         document.getElementById("num").innerHTML = "";
+        <script>
 
-         var out = "";
-         var check = 0;
-         try {
-             var str = JSON.parse(document.getElementById("Input").value);
-             for (var i in str) {
-                 var info = str[i];
-                 if (!(info.rfcard_uid == null) && !(info.rfcard_uid == "")) {
-                     var checks = document.getElementsByName("info_valid");
-                     var _grade = checks[0].checked;
-                     var _class = checks[1].checked;
-                     var _number = checks[2].checked;
-                     var _StudentId = checks[3].checked;
-                     var _gender = checks[4].checked;
-                     out += (_grade == true ? info.grade + "학년 " : "") + (_class == true ? info.class + "반 \
+            function convert() {
+                //init
+                document.getElementById("Output").value = "";
+                document.getElementById("num").innerHTML = "";
+
+                var out = "";
+                var check = 0;
+                try {
+                    var str = JSON.parse(document.getElementById("Input").value);
+                    for (var i in str) {
+                        var info = str[i];
+                        if (!(info.rfcard_uid == null) && !(info.rfcard_uid == "")) {
+                            var checks = document.getElementsByName("info_valid");
+                            var _grade = checks[0].checked;
+                            var _class = checks[1].checked;
+                            var _number = checks[2].checked;
+                            var _StudentId = checks[3].checked;
+                            var _gender = checks[4].checked;
+                            out += (_grade == true ? info.grade + "학년 " : "") + (_class == true ? info.class + "반 \
 " : "") + (_number == true ? info.number + "번 \t" : "") + document.getElementById("prefix").value + info.name + "\
 "+ document.getElementById("suffix").value + "     \t" + (_gender == true ? info.gender : "") + "\t" + (_StudentId == true ? info.serial : "") + "\n";
-                     ++check;
-                 }
-             }
-             document.getElementById("Output").value = out;
-             document.getElementById("num").innerHTML = "총 : " + check + "\t명";
-         } catch (error) {
-             if (error instanceof SyntaxError) {
-                 document.getElementById("error").innerHTML = "오류가 발생했습니다!! \t: " + error.message;
-             } else {
-                 throw error;
-             }
-         }
-     }
-     function preview() {
-         var checks = document.getElementsByName("info_valid");
-         //학년 반 번호 학번
-         var _grade = ((checks[0].checked == true) ? "1학년 " : "");
-         var _class = ((checks[1].checked == true) ? "5반 " : "");
-         var _number = ((checks[2].checked == true) ? "31번 " : "");
-         var _StudentId = ((checks[3].checked == true) ? "1531" : "");
-         var _gender = ((checks[4].checked == true) ? "M " : "");
-         var str = "";
-         str = _grade + _class + _number + document.getElementById("prefix").value + "\
+                            ++check;
+                        }
+                    }
+                    document.getElementById("Output").value = out;
+                    document.getElementById("num").innerHTML = "총 : " + check + "\t명";
+                } catch (error) {
+                    if (error instanceof SyntaxError) {
+                        document.getElementById("error").innerHTML = "오류가 발생했습니다!! \t: " + error.message;
+                    } else {
+                        throw error;
+                    }
+                }
+            }
+            function preview() {
+                var checks = document.getElementsByName("info_valid");
+                //학년 반 번호 학번
+                var _grade = ((checks[0].checked == true) ? "1학년 " : "");
+                var _class = ((checks[1].checked == true) ? "5반 " : "");
+                var _number = ((checks[2].checked == true) ? "31번 " : "");
+                var _StudentId = ((checks[3].checked == true) ? "1531" : "");
+                var _gender = ((checks[4].checked == true) ? "M " : "");
+                var str = "";
+                str = _grade + _class + _number + document.getElementById("prefix").value + "\
 임우진" + document.getElementById("suffix").value + "     " + _gender + "\t" + _StudentId + "\n";
-         document.getElementById("preview").value = str;
-     }
+                document.getElementById("preview").value = str;
+            }
 
-</script>
+        </script>
 
 </body>
 
