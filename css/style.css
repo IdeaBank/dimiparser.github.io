@@ -1,0 +1,17 @@
+body {
+    font-family:'굴림';
+    font-size:10pt;
+    text-align: center;    
+}
+body {
+    text-align: center;
+}
+#wrapper {
+    width: 500px;
+    margin: 0 auto;
+    border: 1px solid #000;
+    text-align: left;
+}
+fieldset {
+    margin: 0 auto;
+}
